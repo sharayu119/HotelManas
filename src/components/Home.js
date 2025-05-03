@@ -165,7 +165,7 @@ const Home = () => {
       <HeroSection>
         <HeroContent>
           
-          <Title>Welcome to Manas Satara</Title>
+          <Title>Welcome to Hotel Manas</Title>
           <Subtitle>Experience authentic Indian cuisine crafted with passion and tradition</Subtitle>
           <Button to="/reservation">Book Your Table</Button>
         </HeroContent>

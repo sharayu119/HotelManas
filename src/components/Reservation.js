@@ -261,10 +261,10 @@ const Reservation = () => {
           </InfoText>
           <ContactInfo>
             <ContactItem>
-              📍 Location: 123 Main Street, Satara, Maharashtra
+              📍 Location: Kolhapur,Pune-Bengaluru Highway,opposite DSK Toyota,Varye,Satara,Maharashtra-415011
             </ContactItem>
             <ContactItem>
-              📞 Phone: +91 123-456-7890
+              📞 Phone: 9923887001
             </ContactItem>
             <ContactItem>
               ⏰ Hours: Mon-Sun: 11:00 AM - 11:00 PM

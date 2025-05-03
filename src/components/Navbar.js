@@ -47,7 +47,7 @@ const Navbar = () => {
   return (
     <Nav>
       <NavContainer>
-        <Logo to="/">Manas Satara</Logo>
+        <Logo to="/">Hotel Manas</Logo>
         <NavLinks>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/menu">Menu</NavLink>
