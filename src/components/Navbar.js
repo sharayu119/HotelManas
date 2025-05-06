@@ -9,6 +9,7 @@ const Nav = styled.nav`
   width: 100%;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const NavContainer = styled.div`
@@ -20,11 +21,21 @@ const NavContainer = styled.div`
 `;
 
 const Logo = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: #ffd700;
   text-decoration: none;
   font-size: 1.8rem;
   font-weight: bold;
   font-family: 'Playfair Display', serif;
+`;
+
+const LogoImage = styled.img`
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 `;
 
 const NavLinks = styled.div`
@@ -47,7 +58,10 @@ const Navbar = () => {
   return (
     <Nav>
       <NavContainer>
-        <Logo to="/">Hotel Manas</Logo>
+        <Logo to="/">
+          <LogoImage src="/images/manas logo.png" alt="Hotel Manas Logo" />
+          Hotel Manas
+        </Logo>
         <NavLinks>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/menu">Menu</NavLink>
@@ -59,4 +73,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

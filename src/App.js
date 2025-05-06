@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Menu from './components/Menu';
 import Reservation from './components/Reservation';
+import Contact from './components/Contact';
 
 const GlobalContainer = styled.div`
   min-height: 100vh;
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/reservation" element={<Reservation />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </GlobalContainer>
     </Router>
