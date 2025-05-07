@@ -158,6 +158,12 @@ const HighlightCard = styled.div`
   border-radius: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     transform: translateY(-10px);
@@ -193,29 +199,95 @@ const HighlightImage = styled.div`
   }
 `;
 
-const GallerySection = styled.section`
-  padding: 6rem 2rem;
-  background-color: #f9f9f9;
+const GalleryWrapper = styled.section`
+  background: url('/images/background2.jpg') center/cover no-repeat, #222;
+  padding: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  opacity:0.78;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    background: linear-gradient(120deg, rgba(255, 215, 0, 0.15) 0%, rgba(34, 34, 34, 0.5) 100%);
+    opacity: 0.10;
+    transform: scale(1.15);
+    animation: zoomOutBg 18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes zoomOutBg {
+    0% {
+      transform: scale(1.15);
+      opacity: 0.1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.15;
+    }
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 `;
 
-const GalleryGrid = styled.div`
+const GalleryTitle = styled.h2`
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+`;
+
+const GallerySubtitle = styled.p`
+  color: #bbb;
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  letter-spacing: 1px;
+`;
+
+const GalleryGridNew = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  max-width: 1200px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1.2rem;
+  width: 450px;
+  max-width: 150vw;
   margin: 0 auto;
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 95vw;
+  }
 `;
 
-const GalleryImage = styled.div`
-  height: 300px;
+const GalleryImgBox = styled.div`
+  width: 130px;
+  height: 130px;
   background-size: cover;
   background-position: center;
-  border-radius: 15px;
-  transition: transform 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  transition: transform 0.2s;
   cursor: pointer;
-
+  background-color: #333;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+  @media (max-width: 600px) {
+    width: 100px;
+    height: 100px;
   }
 `;
 
@@ -641,28 +713,25 @@ const Home = () => {
               </HighlightsGrid>
             </HighlightsSection>
 
-            <GallerySection>
-              <FadeInSection>
-                <SectionTitle>Our Gallery</SectionTitle>
-              </FadeInSection>
-              <GalleryGrid>
+            <GalleryWrapper style={{color:"black"}}>
+              <GalleryTitle>gallery</GalleryTitle>
+              <GallerySubtitle>OF OUR RESTAURANT</GallerySubtitle>
+              <GalleryGridNew>
                 {[
                   '/images/gallery/dish1.jpg',
-                  '/images/gallery/ambiance1.jpg',
                   '/images/gallery/dish2.jpg',
-                  '/images/gallery/ambiance2.jpg'
-                ].map((image, index) => (
-                  <FadeInSection key={index}>
-                    <GalleryImage
-                      as={motion.div}
-                      style={{ backgroundImage: `url(${image})` }}
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    />
-                  </FadeInSection>
+                  '/images/gallery/ambiance1.jpg',
+                  '/images/gallery/ambiance2.jpg',
+                  '/images/gallery/dish3.jpg',
+                  '/images/gallery/ambiance3.jpg',
+                  '/images/gallery/dish4.jpg',
+                  '/images/gallery/dish5.jpg',
+                  '/images/gallery/dish6.jpg',
+                ].map((img, idx) => (
+                  <GalleryImgBox key={idx} style={{ backgroundImage: `url(${img})` }} />
                 ))}
-              </GalleryGrid>
-            </GallerySection>
+              </GalleryGridNew>
+            </GalleryWrapper>
 
             <TestimonialsSection>
               <FadeInSection>
