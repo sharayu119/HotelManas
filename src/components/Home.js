@@ -20,6 +20,11 @@ const HeroSection = styled(motion.div)`
   text-align: center;
   overflow: hidden;
   background: #000;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    height: 90vh;
+  }
 `;
 
 const HeroBackground = styled(motion.div)`
@@ -41,10 +46,10 @@ const HeroBackground = styled(motion.div)`
     bottom: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.5) 40%,
-      rgba(0, 0, 0, 0.6) 60%,
-      rgba(0, 0, 0, 0.8) 100%
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.6) 40%,
+      rgba(0, 0, 0, 0.7) 60%,
+      rgba(0, 0, 0, 0.9) 100%
     );
     z-index: 1;
   }
@@ -59,38 +64,83 @@ const HeroContent = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+    padding: 1rem;
+    width: 90%;
+  }
+
+  @media (max-width: 480px) {
+    width: 95%;
+    padding: 0.8rem;
+  }
 `;
 
 const Title = styled(motion.h1)`
-  font-size: 4.2rem;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
   margin-bottom: 1.2rem;
   font-family: 'Playfair Display', serif;
   color: #ffd700;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.8),
+    -1px -1px 0 rgba(0, 0, 0, 0.5),
+    1px -1px 0 rgba(0, 0, 0, 0.5),
+    -1px 1px 0 rgba(0, 0, 0, 0.5),
+    1px 1px 0 rgba(0, 0, 0, 0.5);
   letter-spacing: 1px;
+  line-height: 1.2;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: inline-block;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+
+  @media (max-width: 768px) {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    padding: 0.4rem 0.8rem;
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.9),
+      -1px -1px 0 rgba(0, 0, 0, 0.7),
+      1px -1px 0 rgba(0, 0, 0, 0.7),
+      -1px 1px 0 rgba(0, 0, 0, 0.7),
+      1px 1px 0 rgba(0, 0, 0, 0.7);
+  }
+
+  @media (max-width: 480px) {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    padding: 0.3rem 0.6rem;
+    background: rgba(0, 0, 0, 0.5);
+  }
 `;
 
 const Subtitle = styled(motion.p)`
-  font-size: 1.8rem;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
   margin-bottom: 2.5rem;
   color: #ffffff;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
   line-height: 1.5;
   font-weight: 300;
   max-width: 700px;
+  padding: 0 1rem;
 `;
 
 const AnimatedButton = styled(motion(Link))`
   background-color: #ffd700;
   color: #000;
-  padding: 1.2rem 2.8rem;
+  padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1.5rem, 3vw, 2.8rem);
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   transition: all 0.4s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   border: 2px solid transparent;
+  white-space: nowrap;
 
   &:hover {
     background-color: transparent;
@@ -120,7 +170,7 @@ const HighlightsSection = styled.section`
     background-image: url('/images/background.png');
     background-size: cover;
     background-position: center;
-    opacity: 0.2;  /* Adjust this value to make the background more or less visible */
+    opacity: 0.2; 
     z-index: -1;
   }
 `;
@@ -132,6 +182,15 @@ const SectionTitle = styled.h2`
   margin-bottom: 3rem;
   font-family: 'Playfair Display', serif;
   position: relative;
+
+  @media (max-width: 768px) {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
 
   &::after {
     content: '';
@@ -145,21 +204,25 @@ const SectionTitle = styled.h2`
 
 const HighlightsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
 `;
 
 const HighlightCard = styled.div`
   text-align: center;
-  padding: 2.5rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   background-color: #f9f9f9;
   border-radius: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 400px;
-  width: 300px;
+  height: auto;
+  min-height: 350px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -173,14 +236,14 @@ const HighlightCard = styled.div`
   h3 {
     color: #333;
     margin: 1.5rem 0;
-    font-size: 1.8rem;
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
     font-family: 'Playfair Display', serif;
   }
 
   p {
     color: #666;
     line-height: 1.6;
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   }
 `;
 
@@ -193,6 +256,11 @@ const HighlightImage = styled.div`
   background-position: center;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 160px;
+    height: 160px;
+  }
 
   &:hover {
     transform: scale(1.05);
@@ -207,7 +275,7 @@ const GalleryWrapper = styled.section`
   align-items: center;
   position: relative;
   overflow: hidden;
-  opacity:0.78;
+  opacity:0.70;
 
   &::before {
     content: '';
@@ -239,55 +307,62 @@ const GalleryWrapper = styled.section`
 
 const GalleryTitle = styled.h2`
   font-family: 'Playfair Display', serif;
-  font-size: 2.8rem;
-  color: #fff;
-  margin-bottom: 0.5rem;
+  font-size: 3.6rem;
+
+  color: black;
+  margin-bottom: 1rem;
   text-align: center;
-  letter-spacing: 2px;
-  text-transform: lowercase;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow:2px 2px 8px rgba(0, 0, 0, 0.96);
+
+  @media (max-width: 768px) {
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+  }
 `;
 
 const GallerySubtitle = styled.p`
   color: #bbb;
-  font-size: 1.1rem;
-  margin-bottom: 2.5rem;
+  font-size: 1.8rem;
+  margin-bottom: 3.5rem;
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  font-weight:300;
 `;
 
 const GalleryGridNew = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 1.2rem;
-  width: 450px;
-  max-width: 150vw;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  width: min(90%, 750px);
   margin: 0 auto;
+  padding: 0 1rem;
 
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    width: 95vw;
+    width: 95%;
   }
 `;
 
 const GalleryImgBox = styled.div`
-  width: 130px;
-  height: 130px;
+  aspect-ratio: 1;
+  width: 100%;
   background-size: cover;
   background-position: center;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
-  transition: transform 0.2s;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
   cursor: pointer;
-  background-color: #333;
+
   &:hover {
-    transform: scale(1.04);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-  }
-  @media (max-width: 600px) {
-    width: 100px;
-    height: 100px;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
   }
 `;
 
@@ -299,17 +374,19 @@ const TestimonialsSection = styled.section`
 
 const TestimonialsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
 `;
 
 const TestimonialCard = styled.div`
   background: rgba(255, 255, 255, 0.1);
-  padding: 2.5rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   border-radius: 15px;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: transform 0.3s ease;
 
   &:hover {
@@ -317,20 +394,20 @@ const TestimonialCard = styled.div`
   }
 
   p {
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
     line-height: 1.8;
     margin-bottom: 1.5rem;
     font-style: italic;
   }
 
   h4 {
-    color:rgb(255, 166, 0);
-    font-size: 1.2rem;
+    color: rgb(255, 166, 0);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
     margin-bottom: 0.5rem;
   }
 
   span {
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 1.2vw, 0.9rem);
     opacity: 0.8;
   }
 `;
@@ -714,19 +791,19 @@ const Home = () => {
             </HighlightsSection>
 
             <GalleryWrapper style={{color:"black"}}>
-              <GalleryTitle>gallery</GalleryTitle>
-              <GallerySubtitle>OF OUR RESTAURANT</GallerySubtitle>
+              <GalleryTitle style={{color:"black"}}><h1>GALLERY</h1></GalleryTitle>
+              <GallerySubtitle style={{color:"yellow"}}><h3>Of Our Restaurant</h3></GallerySubtitle>
               <GalleryGridNew>
                 {[
-                  '/images/gallery/dish1.jpg',
-                  '/images/gallery/dish2.jpg',
-                  '/images/gallery/ambiance1.jpg',
-                  '/images/gallery/ambiance2.jpg',
-                  '/images/gallery/dish3.jpg',
-                  '/images/gallery/ambiance3.jpg',
-                  '/images/gallery/dish4.jpg',
-                  '/images/gallery/dish5.jpg',
-                  '/images/gallery/dish6.jpg',
+                  '/images/gallery/resto1.jpg',
+                  '/images/gallery/resto2.jpg',
+                  '/images/gallery/resto3.jpg',
+                  '/images/gallery/resto4.jpg',
+                  '/images/gallery/resto5.jpg',
+                  '/images/gallery/resto6.jpg',
+                  '/images/gallery/resto7.jpg',
+                  '/images/gallery/resto8.jpg',
+                  '/images/gallery/resto9.jpg',
                 ].map((img, idx) => (
                   <GalleryImgBox key={idx} style={{ backgroundImage: `url(${img})` }} />
                 ))}

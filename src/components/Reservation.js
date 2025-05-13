@@ -5,13 +5,17 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const ReservationContainer = styled.div`
   min-height: 100vh;
-  padding: 100px 20px 50px;
+  padding: clamp(60px, 10vw, 100px) clamp(15px, 3vw, 20px) clamp(30px, 5vw, 50px);
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
     url('/images/diningimg.jpg') center/cover no-repeat;
   background-attachment: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    background-attachment: scroll;
+  }
 `;
 
 const ReservationWrapper = styled.div`
@@ -19,19 +23,28 @@ const ReservationWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   display: flex;
-  gap: 3rem;
-  padding: 2rem;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1rem, 3vw, 2rem);
 
   @media (max-width: 1024px) {
     flex-direction: column;
+    gap: clamp(1.5rem, 4vw, 2rem);
   }
 `;
 
 const ReservationInfo = styled.div`
   flex: 1;
   color: white;
-  padding: 2rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
   animation: slideInLeft 1s ease-out;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  @media (max-width: 1024px) {
+    text-align: center;
+  }
 
   @keyframes slideInLeft {
     from {
@@ -46,44 +59,53 @@ const ReservationInfo = styled.div`
 `;
 
 const InfoTitle = styled.h2`
-  font-size: 2.8rem;
-  margin-bottom: 1.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
   font-family: 'Playfair Display', serif;
   color: #ffd700;
+  line-height: 1.3;
 `;
 
 const InfoText = styled.p`
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   line-height: 1.8;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
   color: #f0f0f0;
 `;
 
 const ContactInfo = styled.div`
-  margin-top: 3rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
 `;
 
 const ContactItem = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+  margin-bottom: clamp(0.8rem, 2vw, 1rem);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: #f0f0f0;
+  gap: 1rem;
+
+  @media (max-width: 1024px) {
+    justify-content: center;
+  }
 
   svg {
-    margin-right: 1rem;
     color: #ffd700;
+    flex-shrink: 0;
   }
 `;
 
 const ReservationForm = styled.form`
   flex: 1;
-  padding: 3rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   animation: slideUp 0.8s ease-out;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.8rem);
 
   @keyframes slideUp {
     from {
@@ -98,109 +120,126 @@ const ReservationForm = styled.form`
 `;
 
 const FormTitle = styled.h3`
-  font-size: 2.2rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
   color: #333;
-  margin-bottom: 2rem;
+  margin-bottom: clamp(1rem, 2vw, 2rem);
   text-align: center;
   font-family: 'Playfair Display', serif;
+  line-height: 1.3;
 
   &::after {
     content: '';
     display: block;
-    width: 50px;
+    width: clamp(40px, 8vw, 50px);
     height: 3px;
     background-color: #ffd700;
-    margin: 15px auto 0;
+    margin: clamp(8px, 2vw, 15px) auto 0;
   }
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 1.8rem;
+  display: grid;
+  gap: 0.5rem;
 `;
 
 const Label = styled.label`
-  display: block;
-  margin-bottom: 0.8rem;
   color: #333;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 1rem;
+  padding: clamp(0.8rem, 1.5vw, 1rem);
   border: 2px solid #eee;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   transition: all 0.3s ease;
+  background-color: white;
 
   &:focus {
     outline: none;
     border-color: #ffd700;
-    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+  }
+
+  &::placeholder {
+    color: #999;
   }
 `;
 
 const Select = styled.select`
   width: 100%;
-  padding: 1rem;
+  padding: clamp(0.8rem, 1.5vw, 1rem);
   border: 2px solid #eee;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   background-color: white;
   cursor: pointer;
   transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
 
   &:focus {
     outline: none;
     border-color: #ffd700;
-    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
   }
 `;
 
 const StyledDatePicker = styled(DatePicker)`
   width: 100%;
-  padding: 1rem;
+  padding: clamp(0.8rem, 1.5vw, 1rem);
   border: 2px solid #eee;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   cursor: pointer;
+  background-color: white;
 
   &:focus {
     outline: none;
     border-color: #ffd700;
-    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
   }
 `;
 
 const Button = styled.button`
   width: 100%;
-  padding: 1.2rem;
+  padding: clamp(1rem, 2vw, 1.2rem);
   background-color: #ffd700;
   color: #000;
   border: none;
   border-radius: 8px;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 1rem;
+  margin-top: clamp(0.5rem, 1vw, 1rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 
   &:hover {
     background-color: #e6c200;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
+
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 const SuccessMessage = styled.div`
   background-color: #4caf50;
   color: white;
-  padding: 1.2rem;
+  padding: clamp(1rem, 2vw, 1.2rem);
   border-radius: 8px;
-  margin-top: 1.5rem;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
   text-align: center;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   animation: fadeIn 0.5s ease-out;
 
   @keyframes fadeIn {
