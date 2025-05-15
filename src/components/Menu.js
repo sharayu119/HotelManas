@@ -187,64 +187,193 @@ const DishPrice = styled.span`
 
 const Menu = () => {
   const menuItems = {
-    starters: [
+    vegStarters: [
       {
         name: 'Paneer Tikka',
         description: 'Marinated cottage cheese cubes grilled to perfection with Indian spices',
         price: '₹250',
-        image: '/images/paneer-tikka.jpg'
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmJ40xz8gBs8cn_kob12fagYxODNO5JTF_AA&s',
+        isVeg: true
       },
       {
         name: 'Veg Spring Rolls',
         description: 'Crispy rolls filled with mixed vegetables and Asian spices',
         price: '₹180',
-        image: '/images/spring-rolls.jpg'
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlWHwYgrOG1g6TDcxL7dqbymshUOEI5V-xuA&s',
+        isVeg: true
       },
       {
         name: 'Masala Papad',
         description: 'Crispy lentil wafers topped with spiced onions and tomatoes',
         price: '₹80',
-        image: '/images/masala-papad.jpg'
+        image: 'https://www.indore.online/cdn/shop/articles/Masala_Papad_735x.jpg?v=1674819304',
+        isVeg: true
+      },
+      {
+        name: 'Hara Bhara Kebab',
+        description: 'Green vegetable patties made with spinach and green peas',
+        price: '₹220',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfHVo86pfZ98tQRR2cbDfCCeLFlDjecnw5Qg&s',
+        isVeg: true
+      },
+      {
+        name: 'Manchurian',
+        description: 'Crispy fried vegetables in a spicy sauce',
+        price: '₹200',
+        image: 'https://www.indianveggiedelight.com/wp-content/uploads/2017/06/gobi-manchurian-featured.jpg',
+        isVeg: true
+      },
+      {
+        name: 'Aloo Tikki',
+        description: 'Crispy potato patties made with potatoes and spices',
+        price: '₹150',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2jMNIphcLzkGiYCchSgSyiayBL-hGW-Y9HA&s',
+        isVeg: true
       }
     ],
-    mainCourse: [
+    nonVegStarters: [
       {
-        name: 'Butter Chicken',
-        description: 'Tender chicken pieces in rich tomato and butter gravy',
-        price: '₹350',
-        image: '/images/butter-chicken.jpg'
+        name: 'Chicken Tikka',
+        description: 'Tender chicken pieces marinated in spices and grilled',
+        price: '₹280',
+        image: 'https://images.immediate.co.uk/production/volatile/sites/30/2022/08/Chicken-Tikka-99647a6.jpg?quality=90&resize=556,505',
+        isVeg: false
       },
+      {
+        name: 'Fish Tikka',
+        description: 'Fresh fish marinated in spices and grilled to perfection',
+        price: '₹320',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0-716YYVz7e2Bvgf8LwdihesIgbJ5YwKD2Q&s',
+        isVeg: false
+      },
+      {
+        name: 'Chicken Wings',
+        description: 'Crispy fried chicken wings with special sauce',
+        price: '₹300',
+        image: 'https://bakerbynature.com/wp-content/uploads/2015/02/Sweet-and-Spicy-Sriracha-Chicken-Wings-0-6.jpg',
+        isVeg: false
+      }
+    ],
+    vegMainCourse: [
       {
         name: 'Paneer Butter Masala',
         description: 'Cottage cheese cubes in creamy tomato gravy',
         price: '₹280',
-        image: '/images/paneer-butter-masala.jpg'
+        image: 'https://vegecravings.com/wp-content/uploads/2017/04/paneer-butter-masala-recipe-step-by-step-instructions.jpg',
+        isVeg: true
       },
       {
         name: 'Dal Makhani',
         description: 'Black lentils slow-cooked with cream and butter',
         price: '₹250',
-        image: '/images/dal-makhani.jpg'
+        image: 'https://www.greedygourmet.com/wp-content/uploads/2013/02/dal-makhani-feature-225x225.jpg',
+        isVeg: true
       },
       {
-        name: 'Veg Biryani',
-        description: 'Fragrant basmati rice cooked with mixed vegetables and aromatic spices',
+        name: 'Kaju Masala',
+        description: 'Kaju masala is a popular dish in Indian cuisine, made with cashews, onions, tomatoes, and spices',
         price: '₹280',
-        image: '/images/veg-biryani.jpg'
+        image: 'https://sagarkitchen.com/wp-content/uploads/2024/01/kaju-masala-recipe-cashew-masala-kaju-kari-kaju-curry-cashew-nut-curry-sri-lanka-sagar-kitchen-.webp',
+        isVeg: true
+      }, 
+      {
+        name: 'Paneer Angara',
+        description: 'Paneer angara is a popular dish in Indian cuisine, made with paneer, onions, tomatoes, and spices',
+        price: '₹280',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtAjTg5mbppm4qpc8Hy8P-MWD0iZj5P7S-PA&s',
+        isVeg: true
+      },
+      {
+        name: 'Malai Kofta',
+        description: 'Vegetable dumplings in rich creamy gravy',
+        price: '₹260',
+        image: 'https://media.istockphoto.com/id/1219174110/photo/malai-kofta-curry-in-black-bowl-at-dark-slate-background-malai-kofta-is-indian-cuisine-dish.jpg?s=612x612&w=0&k=20&c=YBusjVmB35Q0AAFuMs48KRLNgnDQuL1dONJ0EBYwS9M=',
+        isVeg: true
+      }
+    ],
+    nonVegMainCourse: [
+      {
+        name: 'Butter Chicken',
+        description: 'Tender chicken pieces in rich tomato and butter gravy',
+        price: '₹350',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN2jh7DvoLtDyDF6cigDHFrSMs5zMpaXRelA&s',
+        isVeg: false
+      },
+      {
+        name: 'Chicken Curry',
+        description: 'Chicken cooked in traditional Indian spices',
+        price: '₹320',
+        image: 'https://www.whiskaffair.com/wp-content/uploads/2020/07/Tomato-Chicken-Curry-2-3.jpg',
+        isVeg: false
+      },
+      {
+        name: 'Fish Curry',
+        description: 'Fish cooked in spicy coconut gravy',
+        price: '₹380',
+        image: 'https://www.shutterstock.com/image-photo/fish-curry-flavorful-aromatic-dish-260nw-2581414087.jpg',
+        isVeg: false
+      },
+      {
+        name: 'Chicken Biryani',
+        description: 'Fragrant basmati rice cooked with chicken and aromatic spices',
+        price: '₹320',
+        image: 'https://static.vecteezy.com/system/resources/thumbnails/040/703/949/small/ai-generated-royal-feast-master-the-art-of-chicken-biryani-at-home-generative-ai-photo.jpg',
+        isVeg: false
       }
     ],
     breads: [
       {
+        name: 'Tandoori Roti',
+        description: 'Whole wheat bread baked in tandoor',
+        price: '₹40',
+        image: 'https://s3-ap-south-1.amazonaws.com/betterbutterbucket-silver/14423167232KIe8WnTzK_thumb.jpeg',
+        isVeg: true
+      },
+      {
         name: 'Butter Naan',
         description: 'Soft leavened bread brushed with butter',
         price: '₹60',
-        image: '/images/butter-naan.jpg'
+        image: 'https://orders.popskitchen.in/storage/2024/09/image-69.png',
+        isVeg: true
       },
       {
         name: 'Garlic Roti',
         description: 'Whole wheat bread with roasted garlic',
         price: '₹50',
-        image: '/images/garlic-roti.jpg'
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDVl8OI02gnRczFXUC47SlXarb6ExkYj1n5w&s',
+        isVeg: true
+      }
+    ],
+    rice: [
+      {
+        name: 'Steamed Rice',
+        description: 'Rice is a staple food in Indian cuisine',
+        price: '₹100',
+        image: 'https://media.soscuisine.com/images/recettes/large/687.jpg'
+      },
+      {
+        name: 'Jeera Rice',
+        description: 'Rice is a staple food in Indian cuisine',
+        price: '₹120',
+        image: 'https://i.pinimg.com/736x/b5/0f/96/b50f966d24989f72a7cf5bd789bb6408.jpg'
+      },
+      {
+        name: 'Masala Rice',
+        description: 'Rice is a staple food in Indian cuisine',
+        price: '₹150',
+        image: 'https://www.sharmispassions.com/wp-content/uploads/2019/04/MasalaRice2.jpg'
+      },
+      {
+        name: 'Fried Rice',
+        description: 'Fried rice is a popular dish in Indian cuisine',
+        price: '₹170',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSvJ-4KVdyGWaeCdR6w1vhY653Xyk9g2Y0lQ&s'
+      },
+      {
+        name: 'Veg Biryani',
+        description: 'Fragrant basmati rice cooked with mixed vegetables and aromatic spices',
+        price: '₹280',
+        image: 'https://madhurasrecipe.com/wp-content/uploads/2023/03/Veg-Biryani-Featured.jpg',
       }
     ],
     desserts: [
@@ -252,13 +381,21 @@ const Menu = () => {
         name: 'Gulab Jamun',
         description: 'Deep-fried milk dumplings soaked in sugar syrup',
         price: '₹120',
-        image: '/images/gulab-jamun.jpg'
+        image: 'https://i0.wp.com/www.chitrasfoodbook.com/wp-content/uploads/2016/10/gulab-jamun-using-mix.jpg?w=1200&ssl=1'
       },
       {
         name: 'Rasmalai',
         description: 'Soft cottage cheese patties in sweetened, cardamom-flavored milk',
         price: '₹150',
-        image: '/images/rasmalai.jpg'
+        image: 'https://st3.depositphotos.com/5653638/15698/i/450/depositphotos_156987234-stock-photo-save-download-preview-angoori-rasmalai.jpg',
+        isVeg: true
+      },
+      {
+        name: 'Ice Cream',
+        description: 'Assorted flavors of premium ice cream',
+        price: '₹100',
+        image: 'https://static.toiimg.com/thumb/msid-112019658,width-1280,height-720,resizemode-4/112019658.jpg',
+        isVeg: true
       }
     ]
   };
@@ -270,9 +407,9 @@ const Menu = () => {
         <TitleH2>Explore Our Menu</TitleH2>
         
         <MenuSection>
-          <SectionTitle>Starters</SectionTitle>
+          <SectionTitle>Vegetarian Starters</SectionTitle>
           <DishGrid>
-            {menuItems.starters.map((dish, index) => (
+            {menuItems.vegStarters.map((dish, index) => (
               <DishCard key={index}>
                 <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
                 <DishInfo>
@@ -286,9 +423,41 @@ const Menu = () => {
         </MenuSection>
 
         <MenuSection>
-          <SectionTitle>Main Course</SectionTitle>
+          <SectionTitle>Non-Vegetarian Starters</SectionTitle>
           <DishGrid>
-            {menuItems.mainCourse.map((dish, index) => (
+            {menuItems.nonVegStarters.map((dish, index) => (
+              <DishCard key={index}>
+                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
+                <DishInfo>
+                  <DishName>{dish.name}</DishName>
+                  <DishDescription>{dish.description}</DishDescription>
+                  <DishPrice>{dish.price}</DishPrice>
+                </DishInfo>
+              </DishCard>
+            ))}
+          </DishGrid>
+        </MenuSection>
+
+        <MenuSection>
+          <SectionTitle>Vegetarian Main Course</SectionTitle>
+          <DishGrid>
+            {menuItems.vegMainCourse.map((dish, index) => (
+              <DishCard key={index}>
+                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
+                <DishInfo>
+                  <DishName>{dish.name}</DishName>
+                  <DishDescription>{dish.description}</DishDescription>
+                  <DishPrice>{dish.price}</DishPrice>
+                </DishInfo>
+              </DishCard>
+            ))}
+          </DishGrid>
+        </MenuSection>
+
+        <MenuSection>
+          <SectionTitle>Non-Vegetarian Main Course</SectionTitle>
+          <DishGrid>
+            {menuItems.nonVegMainCourse.map((dish, index) => (
               <DishCard key={index}>
                 <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
                 <DishInfo>
@@ -305,6 +474,22 @@ const Menu = () => {
           <SectionTitle>Breads</SectionTitle>
           <DishGrid>
             {menuItems.breads.map((dish, index) => (
+              <DishCard key={index}>
+                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
+                <DishInfo>
+                  <DishName>{dish.name}</DishName>
+                  <DishDescription>{dish.description}</DishDescription>
+                  <DishPrice>{dish.price}</DishPrice>
+                </DishInfo>
+              </DishCard>
+            ))}
+          </DishGrid>
+        </MenuSection>
+
+        <MenuSection>
+          <SectionTitle>Rice</SectionTitle>
+          <DishGrid>
+            {menuItems.rice.map((dish, index) => (
               <DishCard key={index}>
                 <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
                 <DishInfo>
