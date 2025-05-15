@@ -27,17 +27,16 @@ const HeroSection = styled(motion.div)`
   }
 `;
 
-const HeroBackground = styled(motion.div)`
+const VideoBackground = styled.video`
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-size: cover;
-  background-position: center;
-  will-change: opacity, transform;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 
-  &::before {
+  &::after {
     content: '';
     position: absolute;
     top: 0;
@@ -53,6 +52,22 @@ const HeroBackground = styled(motion.div)`
     );
     z-index: 1;
   }
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 11, 11, 0.8) 0%,
+    rgba(61, 56, 56, 0.6) 40%,
+    rgba(44, 41, 41, 0.7) 60%,
+    rgba(49, 46, 46, 0.9) 100%
+  );
+  z-index: 1;
 `;
 
 const HeroContent = styled(motion.div)`
@@ -603,10 +618,13 @@ const FadeInSection = ({ children }) => {
 const Home = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [rotating, setRotating] = useState(false);
 
   const heroImages = [
     '/images/dish1.jpg',
-    '/images/dish2.jpg'
+    '/images/dish2.jpg',
+    '/images/dish3.jpg',
+    '/images/dish4.jpg',
   ];
 
   useEffect(() => {
@@ -627,8 +645,12 @@ const Home = () => {
   useEffect(() => {
     if (!showSplash) {
       const interval = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
-      }, 6000);
+        setRotating(true);
+        setTimeout(() => {
+          setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+          setRotating(false);
+        }, 600);
+      }, 4000);
 
       return () => clearInterval(interval);
     }
@@ -696,29 +718,38 @@ const Home = () => {
             key="main"
           >
             <HeroSection>
-              <AnimatePresence mode="sync">
-                <HeroBackground
+              <VideoBackground
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/images/dish1.jpg"
+              >
+                <source src="/videos/vegebg2.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </VideoBackground>
+              <Overlay />
+              <div style={{ perspective: 1200, height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 2 }}>
+                <motion.img
                   key={currentImageIndex}
+                  src={heroImages[currentImageIndex]}
+                  alt="Hero"
                   style={{
-                    backgroundImage: `url(${heroImages[currentImageIndex]})`,
+                    width: '450px',
+                    height: '450px',
+                    borderRadius: '50%',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
+                    objectFit: 'cover',
                   }}
-                  initial={{ opacity: 0, scale: 1.2 }}
-                  animate={{ 
-                    opacity: 1, 
-                    scale: 1,
-                    transition: {
-                      opacity: { duration: 1.2, ease: "easeInOut" },
-                      scale: { duration: 6, ease: "easeOut" }
-                    }
+                  animate={{
+                    rotateY: rotating ? 180 : 0,
                   }}
-                  exit={{ 
-                    opacity: 0,
-                    transition: {
-                      opacity: { duration: 1.2, ease: "easeInOut" }
-                    }
+                  transition={{
+                    duration: 1.2,
+                    ease: [0.4, 0, 0.2, 1],
                   }}
                 />
-              </AnimatePresence>
+              </div>
               <HeroContent>
                 <Title
                   initial={{ y: 50, opacity: 0 }}

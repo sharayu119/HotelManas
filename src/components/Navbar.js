@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import { FaHome, FaUtensils, FaCalendarCheck, FaEnvelope } from 'react-icons/fa';
 
 const Nav = styled.nav`
   background-color: rgba(26, 26, 26, 0.95);
@@ -22,7 +24,7 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 `;
 
@@ -53,9 +55,25 @@ const LogoImage = styled.img`
   }
 `;
 
-const NavLinks = styled.div`
+const MenuOverlay = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(60, 60, 60, 0.7); // grey overlay
+    z-index: 998;
+    transition: background 0.3s;
+  }
+`;
+
+const NavLinks = styled(motion.div)`
   display: flex;
   gap: 2rem;
+  
 
   @media (max-width: 768px) {
     display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
@@ -65,43 +83,83 @@ const NavLinks = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(26, 26, 26, 0.98);
-    padding: 6rem 2rem 2rem;
-    gap: 1.5rem;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transform: ${({ isOpen }) => isOpen ? 'translateX(0)' : 'translateX(100%)'};
-    transition: transform 0.3s ease-in-out;
+    background: transparent;
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    padding: 6rem 1.5rem 2rem;
+    gap: 2rem;
     z-index: 999;
+    animation: fadeInMenu 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  @keyframes fadeInMenu {
+    from { opacity: 0; transform: translateY(-30px);}
+    to { opacity: 1; transform: translateY(0);}
   }
 `;
 
-const NavLink = styled(Link)`
-  color: white;
+const NavLink = styled(motion(Link))`
+  color: #fff;
   text-decoration: none;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 1.1rem 0 1.1rem 1.5rem;
+  border-radius: 22px;
+  margin: 0.7rem 0;
+  background: linear-gradient(120deg, rgba(30,30,30,0.85) 60%, rgba(255,215,0,0.08) 100%);
+  box-shadow: 0 4px 24px 0 rgba(255, 215, 0, 0.10), 0 1.5px 8px 0 rgba(0,0,0,0.18);
+  transition: 
+    background 0.25s, 
+    color 0.25s, 
+    box-shadow 0.25s, 
+    transform 0.18s;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
-  &:hover {
-    color: #ffd700;
-    background-color: rgba(255, 215, 0, 0.1);
+  &:hover, &:focus {
+    background: linear-gradient(90deg, #ffd700 0%, #ffed4a 100%);
+    color: #222;
+    box-shadow: 0 6px 32px 0 rgba(255, 215, 0, 0.22);
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  &:active {
+    background: linear-gradient(90deg, #ffed4a 0%, #ffd700 100%);
+    color: #111;
+    transform: scale(0.98);
+  }
+
+  @media (min-width: 769px) {
+    font-size: 1.1rem;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin: 0;
+    background: none;
+    box-shadow: none;
+    color: white;
+    transition: all 0.3s ease;
+    &:hover {
+      color: #ffd700;
+      background-color: rgba(255, 215, 0, 0.1);
+      transform: none;
+    }
+    &:active {
+      background: none;
+      color: #ffd700;
+      transform: none;
+    }
   }
 
   @media (max-width: 768px) {
-    font-size: 1.4rem;
-    padding: 1rem;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    margin: 0.5rem 0;
-    background-color: rgba(255, 255, 255, 0.05);
-    
-    &:hover {
-      background-color: rgba(255, 215, 0, 0.15);
-      transform: translateY(-2px);
-    }
+    background: #111;
   }
 `;
 
@@ -157,11 +215,20 @@ const Navbar = () => {
         <MenuButton onClick={toggleMenu} aria-label="Toggle menu">
           {isMenuOpen ? '✕' : '☰'}
         </MenuButton>
+        <MenuOverlay isOpen={isMenuOpen} onClick={toggleMenu} />
         <NavLinks isOpen={isMenuOpen}>
-          <NavLink to="/" onClick={() => setIsMenuOpen(false)}>Home</NavLink>
-          <NavLink to="/menu" onClick={() => setIsMenuOpen(false)}>Menu</NavLink>
-          <NavLink to="/reservation" onClick={() => setIsMenuOpen(false)}>Reservation</NavLink>
-          <NavLink to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</NavLink>
+          <NavLink to="/" onClick={() => setIsMenuOpen(false)}>
+            <FaHome style={{marginRight: '0.7rem'}} /> Home
+          </NavLink>
+          <NavLink to="/menu" onClick={() => setIsMenuOpen(false)}>
+            <FaUtensils style={{marginRight: '0.7rem'}} /> Menu
+          </NavLink>
+          <NavLink to="/reservation" onClick={() => setIsMenuOpen(false)}>
+            <FaCalendarCheck style={{marginRight: '0.7rem'}} /> Reservation
+          </NavLink>
+          <NavLink to="/contact" onClick={() => setIsMenuOpen(false)}>
+            <FaEnvelope style={{marginRight: '0.7rem'}} /> Contact
+          </NavLink>
         </NavLinks>
       </NavContainer>
     </Nav>

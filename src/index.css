@@ -14,6 +14,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f5f5f5;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 code {
@@ -23,6 +25,8 @@ code {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .react-datepicker-wrapper {
@@ -31,4 +35,153 @@ h1, h2, h3, h4, h5, h6 {
 
 .react-datepicker__input-container {
   width: 100%;
+}
+
+/* Global Responsive Styles */
+:root {
+  --mobile-padding: 1rem;
+  --tablet-padding: 2rem;
+  --desktop-padding: 3rem;
+}
+
+/* Base responsive styles */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Responsive typography */
+h1, h2, h3, h4, h5, h6 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Touch-friendly elements */
+button, 
+a, 
+input, 
+select, 
+textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Better scrolling on mobile */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Prevent horizontal scroll */
+  body {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Improve touch targets */
+  button, 
+  a, 
+  input, 
+  select, 
+  textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Loading optimization */
+.lazy-load {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.lazy-load.loaded {
+  opacity: 1;
+}
+
+/* Better form elements on mobile */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  /* Improve button touch targets */
+  button,
+  .button {
+    padding: 12px 20px;
+    margin: 8px 0;
+    border-radius: 8px;
+  }
+}
+
+/* Smooth transitions for mobile menu */
+.mobile-menu-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.mobile-menu-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.mobile-menu-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mobile-menu-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Better table responsiveness */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Improve modal/modal-like elements on mobile */
+.modal,
+.modal-like {
+  padding: var(--mobile-padding);
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 769px) {
+  .modal,
+  .modal-like {
+    padding: var(--tablet-padding);
+  }
+}
+
+@media (min-width: 1024px) {
+  .modal,
+  .modal-like {
+    padding: var(--desktop-padding);
+  }
 }

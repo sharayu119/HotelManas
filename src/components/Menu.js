@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const MenuContainer = styled.div`
@@ -111,14 +111,21 @@ const DishCard = styled.div`
   display: flex;
   flex-direction: column;
   transform-origin: center;
+  will-change: transform;
 
   @media (max-width: 768px) {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 
   &:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(1.01);
   }
 `;
 
@@ -128,9 +135,33 @@ const DishImage = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background-color: #f0f0f0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1));
+    z-index: 1;
+  }
 
   ${DishCard}:hover & {
     transform: scale(1.05);
+  }
+
+  &.loading {
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.6; }
   }
 `;
 
@@ -186,6 +217,9 @@ const DishPrice = styled.span`
 `;
 
 const Menu = () => {
+  const [loadedImages, setLoadedImages] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
   const menuItems = {
     vegStarters: [
       {
@@ -400,6 +434,58 @@ const Menu = () => {
     ]
   };
 
+  useEffect(() => {
+    // Preload images
+    const preloadImages = async () => {
+      const imagePromises = Object.values(menuItems).flat().map(item => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = item.image;
+          img.onload = () => {
+            setLoadedImages(prev => ({
+              ...prev,
+              [item.image]: true
+            }));
+            resolve();
+          };
+          img.onerror = reject;
+        });
+      });
+
+      try {
+        await Promise.all(imagePromises);
+      } catch (error) {
+        console.error('Error preloading images:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    preloadImages();
+  }, []);
+
+  const renderDishCard = (dish) => {
+    const isImageLoaded = loadedImages[dish.image];
+
+    return (
+      <DishCard key={dish.name}>
+        <DishImage
+          className={!isImageLoaded ? 'loading' : ''}
+          style={{
+            backgroundImage: isImageLoaded ? `url(${dish.image})` : 'none'
+          }}
+          role="img"
+          aria-label={`${dish.name} - ${dish.isVeg ? 'Vegetarian' : 'Non-vegetarian'} dish`}
+        />
+        <DishInfo>
+          <DishName>{dish.name}</DishName>
+          <DishDescription>{dish.description}</DishDescription>
+          <DishPrice>{dish.price}</DishPrice>
+        </DishInfo>
+      </DishCard>
+    );
+  };
+
   return (
     <MenuContainer>
       <MenuWrapper>
@@ -409,112 +495,49 @@ const Menu = () => {
         <MenuSection>
           <SectionTitle>Vegetarian Starters</SectionTitle>
           <DishGrid>
-            {menuItems.vegStarters.map((dish, index) => (
-              <DishCard key={index}>
-                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
-                <DishInfo>
-                  <DishName>{dish.name}</DishName>
-                  <DishDescription>{dish.description}</DishDescription>
-                  <DishPrice>{dish.price}</DishPrice>
-                </DishInfo>
-              </DishCard>
-            ))}
+            {menuItems.vegStarters.map(renderDishCard)}
           </DishGrid>
         </MenuSection>
 
         <MenuSection>
           <SectionTitle>Non-Vegetarian Starters</SectionTitle>
           <DishGrid>
-            {menuItems.nonVegStarters.map((dish, index) => (
-              <DishCard key={index}>
-                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
-                <DishInfo>
-                  <DishName>{dish.name}</DishName>
-                  <DishDescription>{dish.description}</DishDescription>
-                  <DishPrice>{dish.price}</DishPrice>
-                </DishInfo>
-              </DishCard>
-            ))}
+            {menuItems.nonVegStarters.map(renderDishCard)}
           </DishGrid>
         </MenuSection>
 
         <MenuSection>
           <SectionTitle>Vegetarian Main Course</SectionTitle>
           <DishGrid>
-            {menuItems.vegMainCourse.map((dish, index) => (
-              <DishCard key={index}>
-                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
-                <DishInfo>
-                  <DishName>{dish.name}</DishName>
-                  <DishDescription>{dish.description}</DishDescription>
-                  <DishPrice>{dish.price}</DishPrice>
-                </DishInfo>
-              </DishCard>
-            ))}
+            {menuItems.vegMainCourse.map(renderDishCard)}
           </DishGrid>
         </MenuSection>
 
         <MenuSection>
           <SectionTitle>Non-Vegetarian Main Course</SectionTitle>
           <DishGrid>
-            {menuItems.nonVegMainCourse.map((dish, index) => (
-              <DishCard key={index}>
-                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
-                <DishInfo>
-                  <DishName>{dish.name}</DishName>
-                  <DishDescription>{dish.description}</DishDescription>
-                  <DishPrice>{dish.price}</DishPrice>
-                </DishInfo>
-              </DishCard>
-            ))}
+            {menuItems.nonVegMainCourse.map(renderDishCard)}
           </DishGrid>
         </MenuSection>
 
         <MenuSection>
           <SectionTitle>Breads</SectionTitle>
           <DishGrid>
-            {menuItems.breads.map((dish, index) => (
-              <DishCard key={index}>
-                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
-                <DishInfo>
-                  <DishName>{dish.name}</DishName>
-                  <DishDescription>{dish.description}</DishDescription>
-                  <DishPrice>{dish.price}</DishPrice>
-                </DishInfo>
-              </DishCard>
-            ))}
+            {menuItems.breads.map(renderDishCard)}
           </DishGrid>
         </MenuSection>
 
         <MenuSection>
           <SectionTitle>Rice</SectionTitle>
           <DishGrid>
-            {menuItems.rice.map((dish, index) => (
-              <DishCard key={index}>
-                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
-                <DishInfo>
-                  <DishName>{dish.name}</DishName>
-                  <DishDescription>{dish.description}</DishDescription>
-                  <DishPrice>{dish.price}</DishPrice>
-                </DishInfo>
-              </DishCard>
-            ))}
+            {menuItems.rice.map(renderDishCard)}
           </DishGrid>
         </MenuSection>
 
         <MenuSection>
           <SectionTitle>Desserts</SectionTitle>
           <DishGrid>
-            {menuItems.desserts.map((dish, index) => (
-              <DishCard key={index}>
-                <DishImage style={{ backgroundImage: `url(${dish.image})` }} />
-                <DishInfo>
-                  <DishName>{dish.name}</DishName>
-                  <DishDescription>{dish.description}</DishDescription>
-                  <DishPrice>{dish.price}</DishPrice>
-                </DishInfo>
-              </DishCard>
-            ))}
+            {menuItems.desserts.map(renderDishCard)}
           </DishGrid>
         </MenuSection>
       </MenuWrapper>
